@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Time</title>
+	
+	<link rel="stylesheet" type="text/css" href="clock.css">
+    <link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
+
+</head>
+
+<body>   
+         <div class="dgtl">
+         	<p>Click on Analog clock/Stopawatch to change screen</p>
+                              <div class="dhrs">
+                                  <p id="dhrs">..</p>
+                              </div>
+                              <div class="dmin">
+                                  <p id="dmin1">..</p>
+                              </div>
+                              <div class="ds">
+                                  <p id="ds">..</p>
+                              </div>
+
+                  </div>
+
+
+         <div id="clock" style="border-radius: 50%;margin-top: 6%;" onclick="dispclock()">
+         	     
+         	 <div class="hour" id="hour">
+         	 	     
+         	 </div>
+         	 <div class="minute" id="minute">
+         	 	
+         	 </div>
+         	 <div class="second" id="second">
+         	 	
+         	 </div>
+         	  <div class="gola">
+         	 	
+         	 </div>
+         	
+         </div>
+
+<!-- stopwatch -->
+
+<div class="stopwatch" id="stopwatch">
+                     
+                 <h1><span class="gold">MY </span>STOPWATCH</h1>
+              <div class="my">
+
+          <div class="circle" onclick="dispstopw()">
+          	
+         <div class="time" id="display">
+               00:00:<span style="color: red">00</span>
+         </div>
+         </div>
+
+
+         <div class="buttons controls">
+                  
+             <button id="startstop" onclick="StartStop()">Start</button>
+
+
+             <button id="reset" onclick="reset()">Reset</button>
+
+         </div>
+       </div>
+
+</div>
+
+
+
+        
+ <script>
+ 	  setInterval(()=>
+ 	  {
+
+
+ 	  	date = new Date();
+ 	  	hrs=date.getHours();
+ 	  	mnt=date.getMinutes();
+ 	  	snd=date.getSeconds();
+
+          document.getElementById("dmin1").innerHTML=mnt;
+
+          document.getElementById("dhrs").innerHTML=hrs;
+
+          document.getElementById("ds").innerHTML=snd;
+
+
+         hrotate=(30*hrs)+(mnt/2);
+         mrotate=6*mnt;
+         srotate=6*snd;
+          
+           hour.style.transform=`rotate(${hrotate}deg)`;
+           minute.style.transform=`rotate(${mrotate}deg)`;
+           second.style.transform=`rotate(${srotate}deg)`;
+
+ 	  	},
+ 	  	1000);
+      // stopwatch
+      let seconds=0;
+let minutes=0;
+let hours=0;
+
+let displaySeconds=0;
+let displayMinutes=0;
+let displayHours=0;
+
+let interval=null;
+
+let status="stopped";
+
+function stopWatch()
+{
+
+  seconds++;
+           
+            if(seconds/60 == 1)
+            {
+              seconds=0;
+              minutes++;
+
+                 if(minutes/60==1)
+                 {
+                  minutes=0;
+                  hours++;
+                 }
+            }
+               
+                    if(seconds <10)
+                    {
+                      displaySeconds="0"+seconds.toString();
+                    }
+                    else{
+                      displaySeconds=seconds;
+                    }
+
+                    if (minutes <10) {
+                      displayMinutes="0"+minutes.toString();
+                    }
+                    else
+                    {
+                      displayMinutes=minutes;
+                    }
+                    if (hours<10) {
+                      displayHours="0"+hours.toString()
+                    }
+                    else{
+                      displayHours=hours;
+                    }
+
+
+                document.getElementById('display').innerHTML=displayHours+":"+displayMinutes+":"+displaySeconds;
+     
+}
+
+function StartStop(){
+
+        if(status== "stopped")
+        {
+          interval=window.setInterval(stopWatch,100);
+          document.getElementById("startstop").innerHTML="Stop";
+          status="started";
+        }
+        else
+        {
+          window.clearInterval(interval);
+          document.getElementById("startstop").innerHTML="Start";
+          status="stopped";
+        }
+  
+
+}
+
+function reset()
+{
+  window.clearInterval(interval);
+  seconds=0;
+  minutes=0;
+  hours=0;
+  
+  document.getElementById("display").innerHTML="00:00:00";
+  document.getElementById("startstop").innerHTML="Start";
+}
+function dispclock()
+{
+document.getElementById("clock").style.display="none";
+document.getElementById("stopwatch").style.display="block";
+}
+function dispstopw(){
+document.getElementById("clock").style.display="block";
+document.getElementById("stopwatch").style.display="none";
+}
+
+ </script>
+</body>
+</html>
